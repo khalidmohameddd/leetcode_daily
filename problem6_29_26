@@ -15,3 +15,16 @@ public:
         return cnt;
     }
 };
+
+/////////or
+public class Solution {
+    public int NumOfStrings(string[] patterns, string word) {
+        int cnt=0;
+        foreach (string h in patterns){
+            if (word.Contains(h)){
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+}
