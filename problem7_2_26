@@ -1,0 +1,36 @@
+#define ll long long
+class Solution {
+public:
+    bool findSafeWalk(vector<vector<int>>& grid, int health) {
+        ll n=grid.size(),m=grid[0].size();
+    priority_queue<pair<ll,pair<ll,ll>>,vector<pair<ll,pair<ll,ll>>>,greater<pair<ll,pair<ll,ll>>>> pq;
+    vector<vector<ll>> vis(n,vector<ll>(m,0));
+    pq.push({grid[0][0],{0,0}});
+    vis[0][0]=1;
+    int dx[]={-1,1,0,0};
+    int dy[]={0,0,1,-1};
+    ll ans=0;
+    while (!pq.empty()) {
+        pair<ll,pair<ll,ll>>p=pq.top();
+        pq.pop();
+        ll cost=p.first;
+        ll ndx=p.second.first;
+        ll ndy=p.second.second;
+        if (ndx==n-1 && ndy==m-1){
+            ans=cost;
+            break;
+        }
+        for (ll i=0;i<4;i++){
+            ll xx=ndx+dx[i],yy=ndy+dy[i];
+            if (xx>-1&&xx<n&&yy>-1&&yy<m&&!vis[xx][yy]){
+                vis[xx][yy]=1;
+                pq.push({cost+grid[xx][yy],{xx,yy}});
+            }
+        }
+    }
+    if (ans<health){
+        return true;
+    }
+    return false;
+    }
+};
