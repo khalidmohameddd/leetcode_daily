@@ -1,0 +1,29 @@
+class Solution {
+public:
+static const int MOD = 1e9 + 7;
+int n;
+int dp[201][201][201];
+
+int go(int idx,int g1,int g2,vector<int>& nums){
+    if (idx == n){
+        if (g1==g2 && g1!=0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    if (~dp[idx][g1][g2]){
+        return dp[idx][g1][g2];
+    }
+    int ans=go(idx+1,g1,g2,nums)%MOD;
+    ans=(ans%MOD+go(idx+1,gcd(g1,nums[idx]),g2,nums)%MOD)%MOD;
+    ans= (ans%MOD + go(idx+1,g1,gcd(g2,nums[idx]),nums)%MOD)%MOD;
+    return dp[idx][g1][g2]=ans%MOD;
+}
+    int subsequencePairCount(vector<int>& nums) {
+        n= nums.size();
+        memset(dp,-1,sizeof(dp));
+        return go(0,0,0,nums);
+    }
+};
